@@ -8,6 +8,8 @@ import sys
 
 import youtube_dl
 
+import subprocess
+
 class CeskaTelevize():
 
     def __init__(self):
@@ -114,15 +116,22 @@ class CeskaTelevize():
         return video_url
 
     def play(self,stream):
+        self.play_mplayer(stream)
         pass
+
+    def play_mplayer(self,stream):
+        args = [ "mplayer", stream]
+        subprocess.Popen(args)
+
+    def play_vlc(self,stream):
+        args = [ "vlc", stream]
+        subprocess.Popen(args)
 
     def run(self):
 
         if not self.download_links():
             print ("Zadne porady se nepodarilo najit. Prosim, zkuste to znovu pozdeji.")
             return False
-
-        print("Nalezeno "+str(len(self.urls))+" programu")
 
         program = 0
         while program == 0:
